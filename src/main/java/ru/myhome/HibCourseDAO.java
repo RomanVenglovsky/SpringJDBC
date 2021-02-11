@@ -46,26 +46,26 @@ public class HibCourseDAO implements CourseDAO, InitializingBean{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Course> findByTitle(String title) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSessionFactory().getCurrentSession().
+		createQuery("from Course c where title like :title", Course.class).
+		setParameter("title", "%"+title.trim()+"%").list();
 	}
 
 	@Override
-	public int insert(Course course) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insert(Course course) {
+		getSessionFactory().getCurrentSession().save(course);
 	}
 
 	@Override
-	public int update(Course course) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void update(Course course) {
+		getSessionFactory().getCurrentSession().update(course);
 	}
 
 	@Override
-	public int delete(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void delete(int id) {
+		Course c = new Course();
+		c.setId(id);
+		getSessionFactory().getCurrentSession().delete(c);
 	}
 
 	@Override

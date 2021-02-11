@@ -8,8 +8,8 @@ public interface CourseDAO {
 	List<Course> findAll();
 	List<Course> findByTitle(String title);
 	
-	int insert(Course course);
-	int update(Course course);
-	int delete(int id);
+	void insert(Course course);
+	void update(Course course);
+	void delete(int id);
 
 }
