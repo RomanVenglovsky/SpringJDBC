@@ -1,9 +1,11 @@
 package ru.myhome;
 
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.EntityManagerFactory;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,8 +15,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
@@ -42,13 +45,13 @@ public class Builder {
 	}
 	
 	@Bean
-	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-		return new HibernateTransactionManager(sessionFactory);
+	public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+		return new JpaTransactionManager(emf);
 	}
 	
 	@Bean
-	public LocalSessionFactoryBean sessionFactory() {
-		Properties prop = new Properties();
+	public LocalContainerEntityManagerFactoryBean emf() {
+		Map<String, Object> prop = new HashMap<String, Object>();
 		/*prop.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		prop.put("hibernate.max_fetch_depth", env.getProperty("hibernate.max_fetch_depth"));
 		prop.put("hibernate.max_fetch_size", env.getProperty("hibernate.max_fetch_size"));
@@ -60,11 +63,14 @@ public class Builder {
 		prop.put("hibernate.max_batch_size",10);
 		prop.put("hibernate.show_sql",true);
 		
-		LocalSessionFactoryBean lsfb = new LocalSessionFactoryBean();
-		lsfb.setDataSource(getDataSource());
-		lsfb.setPackagesToScan("ru.myhome");
-		lsfb.setHibernateProperties(prop);
-		return lsfb;
+		LocalContainerEntityManagerFactoryBean entityManager = 
+				new LocalContainerEntityManagerFactoryBean();
+		entityManager.setDataSource(getDataSource());
+		entityManager.setJpaVendorAdapter(
+				new HibernateJpaVendorAdapter());
+		entityManager.setJpaPropertyMap(prop);
+		entityManager.setPackagesToScan("ru.myhome");
+		return entityManager;
 	}
 	
 	@Bean
