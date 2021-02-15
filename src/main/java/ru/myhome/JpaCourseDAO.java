@@ -59,6 +59,7 @@ public class JpaCourseDAO implements CourseDAO{
 
 	@Override
 	public void update(Course course) {
+		System.out.println("Updating course...");
 		em.merge(course);
 		LOG.info("Course with id: " + course.getId() +"has been updated");
 	}

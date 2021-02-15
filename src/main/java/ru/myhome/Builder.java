@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories
 @PropertySource("classpath:jdbc.properties")
 @PropertySource("classpath:hibernate.properties")
 @ComponentScan
@@ -45,12 +47,12 @@ public class Builder {
 	}
 	
 	@Bean
-	public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
-		return new JpaTransactionManager(emf);
+	public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+		return new JpaTransactionManager(entityManagerFactory);
 	}
 	
 	@Bean
-	public LocalContainerEntityManagerFactoryBean emf() {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		Map<String, Object> prop = new HashMap<String, Object>();
 		/*prop.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 		prop.put("hibernate.max_fetch_depth", env.getProperty("hibernate.max_fetch_depth"));

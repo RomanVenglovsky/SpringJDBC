@@ -10,21 +10,21 @@ public class Main {
 	public static void main(String[] args) {
 		try(AnnotationConfigApplicationContext context =
 				new AnnotationConfigApplicationContext(Builder.class)){
-			CourseDAO courseDao = context.getBean("jpaCourseDAO", CourseDAO.class);
+			CourseDAO courseDao = context.getBean("jpaCourseService", CourseDAO.class);
 			
 			/*Course course = new Course();
 			course.setTitle("New cousre");
 			course.setLength(25);
 			course.setDescription("Very long description of a new intresting course");*/
 			
-			Course course = new Course();
+			/*Course course = new Course();
 			course.setId(19);
-			course.setLength(45);
-			updateCourse(courseDao, course);
+			course.setLength(45);*/
+			//updateCourse(courseDao, course);
 			//findById(courseDao, 7);
 			//addCourse(courseDao, course);
-			//findByTitle(courseDao, "основы");
-			showAllCourses(courseDao);
+			findByTitle(courseDao, "основы");
+			//showAllCourses(courseDao);
 		}
 	}
 	
