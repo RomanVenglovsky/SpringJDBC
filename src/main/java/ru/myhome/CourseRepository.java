@@ -8,7 +8,5 @@ public interface CourseRepository extends CrudRepository<Course, Integer>{
 	
 	Course findById(int id);
 	List<Course> findAll();
-	//List<Course>  findByTitle(String title);
-	//void deleteById(int id);
-
+	List<Course> findByTitle(String title);
 }

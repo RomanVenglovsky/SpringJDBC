@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Repository
+//@Repository
 @Lazy
 @Transactional
 public class JpaCourseDAO implements CourseDAO{

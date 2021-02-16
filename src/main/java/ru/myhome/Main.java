@@ -8,6 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class Main {
 
 	public static void main(String[] args) {
+		
 		try(AnnotationConfigApplicationContext context =
 				new AnnotationConfigApplicationContext(Builder.class)){
 			CourseDAO courseDao = context.getBean("jpaCourseService", CourseDAO.class);
@@ -40,10 +41,11 @@ public class Main {
 	}
 	
 	private static void findByTitle(CourseDAO courseDao, String title) {
-		List<Course> coursesT = courseDao.findByTitle(title);
+		/*List<Course> coursesT = courseDao.findByTitle(title);
 		for(Course item: coursesT) {
 			System.out.println(item);
-		}
+		}*/
+		System.out.println(courseDao.findByTitle(title));
 	}
 	private static void addCourse(CourseDAO courseDao, Course course) {
 		courseDao.insert(course);
